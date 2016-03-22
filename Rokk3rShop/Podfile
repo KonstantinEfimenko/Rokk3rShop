@@ -1,0 +1,7 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.1'
+use_frameworks!
+
+xcodeproj '/Users/konstantinefimenko/Documents/Projects/Rokk3rShop/Rokk3rShop.xcodeproj'
+
+pod 'RealmSwift'

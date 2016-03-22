@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,8 +16,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        dispatch_async(dispatch_queue_create("db", nil)) {
+            let realm = try! Realm()
+            if realm.objects(Brand).count == 0 {
+                self.addInitialData(realm)
+            }
+        }
+        
         return true
+    }
+    
+    func addInitialData(realm: Realm){
+        
+        try! realm.write {
+            for name in ["Gap","Banana Republic","Boss","Hugo Boss","Taylor","Rebecca Taylor"]{
+                let brand = Brand()
+                brand.name = name
+                realm.add(brand)
+            }
+            for name in ["Denim","Pants","Sweaters","Skirts","Dresses"]{
+                let clothingType = ClothingType()
+                clothingType.name = name
+                realm.add(clothingType)
+            }
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {
